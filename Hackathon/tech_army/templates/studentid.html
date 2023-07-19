@@ -1,0 +1,23 @@
+<h1>Student Profile</h1>
+<p>Username: {{ user_profile.user.username }}</p>
+<p>citizenship_id: {{ user_profile.citizenship_id }}</p>
+<p>ward_no: {{ user_profile.ward_no }}</p>
+{% if user_profile.image %}
+    <img src="{{ user_profile.image.url }}" alt="Profile Image">
+{% else %}
+    <p>No image available.</p>
+{% endif %}
+
+
+
+<hr>
+
+
+    <form method="post" enctype="multipart/form-data" action="{% url 'tech_army:update_user_id' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update user ID</button>
+    </form>
+
+    
+

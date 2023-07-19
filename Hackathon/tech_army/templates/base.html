@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://cdn.tailwindcss.com'></script>
-    <title>Tech Army</title>
+    <title> {% block title %}  welcome {% endblock  %}  |   HTML Heading Template</title>
 </head>
 <body>
     
@@ -21,16 +21,20 @@
                 <a href="" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 
 
-                  <a href="" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log in</a>
-                  <a href="" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Signup</a>
+                  <a href="{% url 'tech_army:login'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log in</a>
+                  <a href="{% url 'tech_army:signup'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Signup</a>
                 
                  <a href="admin" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin login</a>
-                  <a href="" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                  <a href="{% url 'tech_army:profile'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </nav>
+      {% block content %}
+      <h1>This is a Heading</h1>
+      {% endblock %}
 </body>
+
 </html>

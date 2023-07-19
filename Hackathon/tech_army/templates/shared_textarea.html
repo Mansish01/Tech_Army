@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shared Textarea</title>
+</head>
+<body>
+  <form method="POST" action="{% url 'tech_army:shared_textarea' %}" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+  
+  <hr>
+  
+  <h2>Previous Entries:</h2>
+  {% for entry in entries %}
+    <p>{{ entry.content }}</p>
+    <p>{{ entry.created_at }}</p>
+    <hr>
+  {% empty %}
+    <p>No previous entries found.</p>
+  {% endfor %}
+</body>
+</html>
