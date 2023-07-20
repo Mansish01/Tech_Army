@@ -19,7 +19,7 @@
 
 
 # Tech Stack:
-Python , Tensorflow, Github, DJango , html , css , js
+Python , Tensorflow, Github, DJango , html , css , js , TailwindCss
 
 # Features:
 User login and register
