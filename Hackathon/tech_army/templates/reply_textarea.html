@@ -1,10 +1,10 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Shared Textarea</title>
 </head>
 <body>
-  <form method="POST" action="{% url 'tech_army:shared_textarea'  %}" >
+  <form method="POST" action="{% url 'tech_army:reply_textarea'  %}" >
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>
@@ -12,18 +12,12 @@
   
   <hr>
   
-  <a href="{% url 'tech_army:reply_textarea'  %}"> 
-    <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
-     Show Solutions
-    </button>
-  </a> 
-  <hr>
   <h2>Previous Entries:</h2>
   {% for entry in entries %}
   <p>{{ entry.user.username}}</p>
+  <p>{{ entry.title }}</p>
     <p>{{ entry.content }}</p>
     <p>{{ entry.created_at }}</p>
-    <p>{{ entry.title }}</p>
     <hr>
   {% empty %}
     <p>No previous entries found.</p>
