@@ -19,7 +19,9 @@
 
 
 # Tech Stack:
-Python , Tensorflow, Github, DJango , html , css , js , TailwindCss
+Python , Tensorflow, Github, DJango , html , css , js , TailwindCss 
+
+Dataset for Hate Speech Algorithm -https://www.kaggle.com/datasets/mrmorj/hate-speech-and-offensive-language-dataset
 
 # Features:
 User login and register
