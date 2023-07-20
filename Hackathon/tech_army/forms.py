@@ -70,11 +70,13 @@ class UserIDForm(forms.ModelForm):
         'class': 'w-full py-4 px-6 rounded-xl'
     }))
 class SharedTextareaForm(forms.Form):
-    content = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}))
-    title = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 10}))
+    title = forms.CharField(widget=forms.Textarea(attrs={'class':'resize-none h-10 p-1 w-full my-3  border rounded-lg focus:outline-none focus:ring focus:border-blue-500'}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class':'resize-none h-16 w-full my-3  border rounded-lg focus:outline-none focus:ring focus:border-blue-500'}))
+    
 class ReplyForm(forms.Form):
-    content = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}))
-    title = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 10}))
+    title = forms.CharField(widget=forms.Textarea(attrs={'class':'resize-none h-10 p-1 w-full my-3  border rounded-lg focus:outline-none focus:ring focus:border-blue-500'}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class':'resize-none h-16 w-full my-3  border rounded-lg focus:outline-none focus:ring focus:border-blue-500'}))
+  
     
 from django import forms
 

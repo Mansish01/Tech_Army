@@ -40,3 +40,38 @@ class Notice(models.Model):
 class Activity(models.Model):
     title = models.TextField(default="")
     image = models.ImageField(upload_to='tech_army/images',default="")
+    
+class Municipality1(models.Model):
+   content = models.CharField(max_length=50)
+   image = models.ImageField(upload_to='tech_army/images',default="")
+   location = models.CharField(max_length=50)
+   ward_no=models.CharField(max_length=50)
+   
+class Municipality2(models.Model):
+    
+   content = models.CharField(max_length=50)
+   image = models.ImageField(upload_to='tech_army/images',default="")
+   location = models.CharField(max_length=50)
+   ward_no=models.CharField(max_length=50)
+    
+class Municipality3(models.Model):
+    
+   content = models.CharField(max_length=50)
+   image = models.ImageField(upload_to='tech_army/images',default="")
+   location = models.CharField(max_length=50)
+   ward_no=models.CharField(max_length=50)
+class Municipality4(models.Model):
+    
+   content = models.CharField(max_length=50)
+   image = models.ImageField(upload_to='tech_army/images',default="")
+   location = models.CharField(max_length=50)
+   ward_no=models.CharField(max_length=50)
+    
+    
+    
+    
+    
+    
+class Department(models.Model):
+    name = models.TextField(default="")
+    citizenship_no = models.TextField()

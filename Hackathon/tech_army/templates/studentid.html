@@ -1,4 +1,5 @@
-<h1>Student Profile</h1>
+{% extends 'base.html' %}
+{% comment %} <h1>Student Profile</h1>
 <p>Username: {{ user_profile.user.username }}</p>
 <p>citizenship_id: {{ user_profile.citizenship_id }}</p>
 <p>ward_no: {{ user_profile.ward_no }}</p>
@@ -20,4 +21,56 @@
     </form>
 
     
-
+ {% endcomment %}
+ 
+ {% block content%}
+ 
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://cdn.tailwindcss.com"></script>
+     <title>Document</title>
+ </head>
+ 
+ <body class="bg-gray-100">
+ 
+     <div class="max-w-2xl mx-auto p-6">
+         <h1 class="text-4xl font-bold mb-4">Citizen Profile</h1>
+         <div class="bg-white p-6 rounded-md shadow-md mb-4 space-y-4">
+             <p class="text-lg ">
+                <span class="font-medium">Username:</span>  {{ user_profile.user.username }}
+             </p>
+             <p class="text-lg">
+                 <span class="font-medium">Citizenship_id:</span>     {{ user_profile.citizenship_id }}
+             </p>
+             <p class="text-lg">
+                 <span class="font-medium">Ward_no: </span>   {{ user_profile.ward_no }}
+             </p>
+             {% if user_profile.image %}
+             <img src="{{ user_profile.image.url }}" alt="Profile Image" class="mt-4 rounded-md shadow-md">
+             {% else %}
+             <p class="mt-4">No image available.</p>
+             {% endif %}
+         </div>
+ 
+ 
+ 
+         <hr class="my-6">
+ 
+ 
+         <form method="post" enctype="multipart/form-data" action="{% url 'tech_army:update_user_id' %}">
+             {% csrf_token %}
+             <div class="bg-white p-6 rounded-md shadow-md">
+                 {{ form.as_p }}
+                 <button type="submit"
+                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mt-4"> Update user ID
+                 </button>
+             </div>
+         </form>
+     </div>
+ </body>
+ {% endblock%}
+ </html>
