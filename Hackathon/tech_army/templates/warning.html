@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warning Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        .warning-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #F87171;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex items-center justify-center h-screen">
+        <div class="warning-container">
+            <h1 class="text-3xl font-semibold mb-4">Warning!</h1>
+            <p class="text-lg">You have provided hate speech.</p>
+            <p class="text-lg">This kind of content is not allowed and may result in consequences.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+{% endblock%}

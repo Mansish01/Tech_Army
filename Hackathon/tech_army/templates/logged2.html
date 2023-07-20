@@ -2,7 +2,7 @@
 {% block content%}
 
 
-<h2>Previous Entries:</h2>
+<h2>Previous Problems:</h2>
   {% for entry in entries %}
   <p>{{ entry.user.username}}</p>
     <p>{{ entry.content }}</p>
@@ -12,4 +12,9 @@
   {% empty %}
     <p>No previous entries found.</p>
   {% endfor %}
+  <a href="{% url 'tech_army:showsolnonly'  %}"> 
+    <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+      Show solutions
+    </button>
+  </a> 
   {% endblock%}

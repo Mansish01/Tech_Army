@@ -1,13 +1,39 @@
 {% extends 'base.html' %}
 {% block content%}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="flex justify-center space-x-5 mb-4">
+  <a href="{% url 'tech_army:municipality1'  %}"> 
+    <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+      Explore Kathmandu
+    </button>
+  </a> 
+  <a href="{% url 'tech_army:municipality2'  %}"> 
+    <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+      Explore Budhanilkantha
+    </button>
+  </a> 
+  <a href="{% url 'tech_army:municipality3'  %}"> 
+    <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+      Explore Kirtipur
+    </button>
+  </a> 
+  <a href="{% url 'tech_army:municipality4'  %}"> 
+    <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+      Explore Tokha
+    </button>
+  </a> 
+  
+</div>
+
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 m-3 lg:grid-cols-3 gap-8">
     {% for i in product %}
-    <div class="bg-white rounded-lg shadow-md p-4 w-120 h-100 hover:bg-blue-100">
+    <div class="bg-blue-100 rounded-lg shadow-md p-4 w-120 h-100 hover:bg-red-100">
       
      
-      <h2 class="text-xl font-semibold mb-2">{{ i.municipality_name }}</h2>
-      <h2 class="text-xl font-semibold mb-2">{{ i.ward_no }}</h2>
-      <h2 class="text-xl font-semibold mb-2">{{ i.desc}}</h2>
+      <h2 class="text-xl font-bold mb-2">Name:{{ i.municipality_name }}</h2>
+      <h2 class="text-xl font-semibold mb-2">Ward_no:{{ i.ward_no }}</h2>
+      <h2 class="text-xl font-semibold mb-2">Description:{{ i.desc}}</h2>
 
       
       <a href="{% url 'tech_army:products' i.municipality_name %}"> 
@@ -15,14 +41,12 @@
           Enter area
         </button>
       </a> 
+      
     </div>
     
 
     {% endfor %}
   </div>
-  
-  
-  
   
 
 

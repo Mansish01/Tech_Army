@@ -6,9 +6,11 @@
   <title>Shared Textarea</title>
 </head>
 <body>
+<div class="h-[500px]">
   <form method="POST" action="{% url 'tech_army:deplogin'  %}" >
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>
   </form>
+</div>
   {% endblock %}

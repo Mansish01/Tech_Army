@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for i in product %}
+    <div class="bg-white rounded-lg shadow-md p-4 w-120 h-100 hover:bg-blue-100">
+      
+        <img src="{{ i.image.url }}" alt="" class="w-100 h-40 object-cover rounded-lg mb-4  flex  items-center justify-center">
+        <h2 class="text-xl font-semibold mb-2">{{ i.content }}</h2>
+        <h2 class="text-xl font-semibold mb-2">{{ i.location }}</h2>
+        <h2 class="text-xl font-semibold mb-2">{{ i.ward_no }}</h2>
+      
+      
+    </div>
+    
+
+    {% endfor %}
+  </div>
+  
+  
+  
+  
+
+
+
+
+{% endblock%}

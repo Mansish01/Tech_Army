@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import Signup, LoginForm, UserIDForm, SharedTextareaForm, ReplyForm,DeptloginForm
-from .models import Society, UserProfile, SharedTextarea, Reply,Notice,Activity
+from .models import Society, UserProfile, SharedTextarea, Reply,Notice,Activity,Municipality1,Municipality2,Municipality3,Municipality4
 import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -119,9 +119,6 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'login.html', {'form': form})
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from .forms import DeptloginForm
 
 def login_view_dept(request):
     if request.method == 'POST':
@@ -201,12 +198,12 @@ def shared_textarea(request,municipality_name):
                     shared_textarea = SharedTextarea.objects.create(content=content, title=title, user=request.user)
                     shared_textarea.user_profile = UserProfile.objects.get(user=request.user)
                     shared_textarea.save()
-                    return redirect('/shared_textareas')
+                    return redirect('/shared_textareasdep')
         
             return render(request, 'shared_textarea.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
    
         else:
-            return redirect('/logged')
+            return redirect('/shared_textareasdep')
             
         
     except UserProfile.DoesNotExist:
@@ -228,7 +225,23 @@ def ReplyForms(request):
             return redirect('/reply_textarea')
 
     return render(request, 'reply_textarea.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
+def showsolnonly(request):
+    form = ReplyForm()
+    entries = Reply.objects.all()
+    user_profiles = UserProfile.objects.all()
+    params = {'user_profiles': user_profiles}
 
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            title = form.cleaned_data['title']
+            shared_textarea = Reply.objects.create(content=content, title=title, user=request.user)
+            shared_textarea.user_profile = UserProfile.objects.get(user=request.user)
+            shared_textarea.save()
+            return redirect('/reply_textarea')
+
+    return render(request, 'viewsoln.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
 
 
 
@@ -267,7 +280,7 @@ def shared_textareas(request):
                     print(hate_speech_prediction)
 
                     if hate_speech_prediction == 1:
-                        return redirect('/logged')  # Make sure you have an 'index' view to handle this redirection.
+                        return redirect('/warning')  # Make sure you have an 'index' view to handle this redirection.
                         # Handle hate speech (e.g., display an error message or take appropriate action).
                         # You may want to show an error message here.
 
@@ -304,7 +317,7 @@ def shared_textareasdep(request):
                     shared_textarea = SharedTextarea.objects.create(content=content, title=title, user=request.user)
                     shared_textarea.user_profile = UserProfile.objects.get(user=request.user)
                     shared_textarea.save()
-                    return redirect('/shared_textareas')
+                    return redirect('/shared_textareasdep')
         
             return render(request, 'logged2.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
 def update_activity(request):
@@ -319,3 +332,35 @@ def update_activity(request):
         form = ActivityForm(instance=activity)
 
     return render(request, 'update_activity.html', {'form': form})
+def municipality1(request):
+    products = Municipality1.objects.all()
+    params = {'product': products}
+    return render(request, 'mun1.html', params)
+    
+    
+    
+    
+def municipality2(request):
+    products = Municipality2.objects.all()
+    params = {'product': products}
+    return render(request, 'mun2.html', params)
+    
+    
+    
+    
+def municipality3(request):
+    products = Municipality3.objects.all()
+    params = {'product': products}
+    return render(request, 'mun3.html', params)
+    
+    
+    
+    
+def municipality4(request):
+    products = Municipality4.objects.all()
+    params = {'product': products}
+    return render(request, 'mun4.html', params)
+    
+def warning(request) :
+      
+     return render(request, 'warning.html')

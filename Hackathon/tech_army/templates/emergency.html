@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content%}
 
-<header class="bg-blue-900 text-white py-4 px-8">
+<header class=" text-black py-4 px-8">
     <h1 class="text-3xl font-semibold">Emergency Services</h1>
 </header>
 
 <!-- Services Section -->
-<div class="container mx-auto py-8 px-4">
+{% comment %} <div class="container mx-auto py-8 px-4">
     <h2 class="text-2xl font-semibold mb-4">Available Services:</h2>
     <ul class="list-disc pl-6">
         <li class="mb-2">
@@ -31,8 +31,29 @@
             </p>
         </li>
     </ul>
-</div>
+</div> {% endcomment %}
 
-
+<div class="Services  flex flex-wrap justify-center space-y-4 space-x-28 m-3 mt-7 h-[380px]">
+    <div
+      class="Ambulance w-1/5 drop-shadow-2xl h-[250px] flex-col border-2 rounded-md border-black text-center p-2 hover:bg-blue-200  bg-slate-200">
+      <h1 class="font-bold text-3xl">Ambulance Service</h1>
+      <p class='mt-2 text-gray-700 text-justify'>In case of medical emergencies or accidents, our ambulance services are available round-the-clock. Dial our emergency number, and our skilled paramedics will respond promptly.</p>
+    
+    </div>
+    <div
+      class="Fire-fighter w-1/5 drop-shadow-2xl h-[250px]  flex-col border-2 rounded-md border-black text-center p-2  bg-slate-200">
+      <h1 class="font-bold text-3xl">Fire-Fighter </h1>
+      <p class="mt-2 text-gray-700 text-justify">Our dedicated team of firefighters is available 24/7 to respond to fire emergencies. Call us immediately in case of any fire-related incidents in your area.</p>
+      
+    </div>
+   
+    <div
+      class="Police w-1/5 drop-shadow-2xl flex-col border-2 rounded-md h-[250px]  border-black text-center p-2  bg-slate-200">
+      <h1 class="font-bold text-3xl">Emergency Flood Services   </h1>
+      <p class=" mt-2 ext-gray-700 text-justify"> We are equipped to handle flood situations and provide assistance during floods.
+        Stay safe and call our helpline number to report any flood emergencies.</p>
+      
+    </div>
+  </div>
 
 {% endblock%}
