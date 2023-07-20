@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content%}
+
+
+<h2>Previous Entries:</h2>
+  {% for entry in entries %}
+  <p>{{ entry.user.username}}</p>
+    <p>{{ entry.content }}</p>
+    <p>{{ entry.created_at }}</p>
+    <p>{{ entry.title }}</p>
+    <hr>
+  {% empty %}
+    <p>No previous entries found.</p>
+  {% endfor %}
+  {% endblock%}

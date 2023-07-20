@@ -8,7 +8,7 @@
 </head>
 <body>
     
-    <nav class="bg-blue-500 ">
+    <nav class="bg-blue-400 ">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
@@ -17,15 +17,21 @@
               </div>
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4 font-bold">
+                  {% if request.user.is_authenticated%}
+                <a href="{% url 'tech_army:index'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 
-                <a href="" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-
-
+                
+                {% else %} 
                   <a href="{% url 'tech_army:login'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Log in</a>
                   <a href="{% url 'tech_army:signup'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Signup</a>
-                
+                  
+                  {% endif %}
+                  <a href="{% url 'tech_army:emergency'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Emergency</a>
+                  <a href="{% url 'tech_army:logged'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Dash</a>
+                  <a href="{% url 'tech_army:signup'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Signup for another account</a>
                  <a href="admin" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin login</a>
                   <a href="{% url 'tech_army:profile'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                  <a href="{% url 'tech_army:deplogin'%}" class="text-black-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">deplogin</a>
                 </div>
               </div>
             </div>
@@ -33,10 +39,60 @@
         </div>
       </nav>
       {% block content %}
-      <div class = "">
-        <img src="/images/local_governence.jpg" width="100px">
+     
+        <header class="bg-blue-900 text-white flex items-center justify-center py-4 px-8">
+          <h1 class="text-3xl font-semibold">Welcome to Our Smart Website</h1>
+      </header>
+      
+      
+      <div class="bg-red-500 h-64 flex items-center justify-center text-white text-2xl font-semibold">
+          <span class="px-4">"Empowering the future with smart software solutions."</span>
       </div>
-      {% endblock %}
-</body>
+       
+      <div class="bg-red">
+        <h1 class="text-6xl flex items-center justify-center font-semibold mb-2">Notices</h1>
+       </div>
+     
 
+        
+        {% for i in product1 %}
+        <div class="bg-white  items-center justify-center  rounded-lg shadow-md p-4 w-120 h-[150px] hover:bg-blue-100">
+          
+         <div class="bg-red">
+          
+          <div class="whitespace-pre-line text-xl font-semibold mb-2  flex  items-center justify-center">{{ i.title | safe }}</div>
+         </div>
+
+         
+          <div class="whitespace-pre-line text-sm font-semibold mb-2  flex  items-center justify-center">{{ i.content | safe }}</div>
+    
+          
+         
+        </div>
+        
+    
+        {% endfor %}
+      </div>
+      <hr><div class="bg-red">
+        <h1 class="text-6xl flex items-center justify-center font-semibold mb-2">Activities</h1>
+       </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for i in product2 %}
+        <div class="bg-white rounded-lg shadow-md p-4 w-120 h-100 hover:bg-blue-100">
+          
+          <img src="{{ i.image.url }}" alt="" class="w-100 h-40 object-cover rounded-lg mb-4  flex  items-center justify-center">
+          <h2 class="text-xl font-semibold mb-2">{{ i.title }}</h2>
+          
+    
+          
+         
+        </div>
+        
+    
+        {% endfor %}
+      </div>
+      
+     
+</body>
+{% endblock %}
 </html>
