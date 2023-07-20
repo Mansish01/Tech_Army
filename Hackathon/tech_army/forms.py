@@ -65,3 +65,7 @@ class UserIDForm(forms.ModelForm):
     }))
 class SharedTextareaForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}))
+    title = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 10}))
+class ReplyForm(forms.Form):
+    content = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}))
+    title = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 10}))

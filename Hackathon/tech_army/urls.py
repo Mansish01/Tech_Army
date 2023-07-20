@@ -15,4 +15,6 @@ path('profile/', views.update_user_id, name='profile'),
 path('update_user_id/', views.update_user_id, name='update_user_id'),
 path('products',views.shared_textarea,name='products'),
 path('shared_textarea', views.shared_textarea, name='shared_textarea'),
+path('reply_textarea', views.ReplyForms, name='reply_textarea'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

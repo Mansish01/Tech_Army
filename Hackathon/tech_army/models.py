@@ -25,4 +25,11 @@ class UserProfile(models.Model):
 
 class SharedTextarea(models.Model):
     content = models.TextField()
+    title = models.TextField(default="")
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Reply(models.Model):
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.TextField(default="")
