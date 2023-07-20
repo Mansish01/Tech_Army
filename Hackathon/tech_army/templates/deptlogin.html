@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content%}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shared Textarea</title>
+</head>
+<body>
+  <form method="POST" action="{% url 'tech_army:deplogin'  %}" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+  {% endblock %}

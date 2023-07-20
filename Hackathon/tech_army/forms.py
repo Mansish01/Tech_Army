@@ -2,6 +2,12 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import UserProfile
+from .models import Activity
+
+class ActivityForm(forms.ModelForm):
+    class Meta:
+        model = Activity
+        fields = ['title', 'image']
 
 
 
@@ -69,3 +75,9 @@ class SharedTextareaForm(forms.Form):
 class ReplyForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}))
     title = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 10}))
+    
+from django import forms
+
+class DeptloginForm(forms.Form):
+    user = forms.CharField(label='Department User', max_length=100)
+    citizenship_no = forms.CharField(label='Citizenship Number', max_length=10)

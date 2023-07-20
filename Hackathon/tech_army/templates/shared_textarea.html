@@ -6,30 +6,56 @@
   <title>Shared Textarea</title>
 </head>
 <body>
-  <form method="POST" action="{% url 'tech_army:shared_textarea'  %}" >
+  <h1 class="text-center font-medium text-4xl mt-8 text-indigo-700">Post The Problem of your area </h1>
+  <div class="mx-auto  p-4">
+    <div class="max-w-lg mx-auto bg-white rounded-sm shadow-md p-8">
+      <div class="flex items-center justify-center rounded-xl bg-indigo-100 p-3 m-auto">
+  <form method="POST" action="{% url 'tech_army:shared_textareas'  %}" >
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <divc class="flex justify-center">
+      <button type="submit"
+        class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 w-1/2  mb-2 rounded-md mt-4">Submit</button></div>
   </form>
+</div>
+</div>
+
   
-  <hr>
+<hr class="my-6">
   
   <a href="{% url 'tech_army:reply_textarea'  %}"> 
-    <button class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
-     Show Solutions
-    </button>
+    <div class="flex justify-center">
+        <button class="bg-red-500 hover:bg-red-700 justify-center flex text-white font-bold py-2 px-4 rounded mt-5">
+          Show Solutions
+        </button>
+      </div>
   </a> 
-  <hr>
-  <h2>Previous Entries:</h2>
+  <hr class="my-6">
+  <h2 class="text-2xl font-bold text-center text-indigo-700">Previous Entries:</h2>
+  <div class=" flex flex-row  flex-wrap justify-center space-y-4 space-x-4 mt-4">
   {% for entry in entries %}
-  <p>{{ entry.user.username}}</p>
-    <p>{{ entry.content }}</p>
-    <p>{{ entry.created_at }}</p>
-    <p>{{ entry.title }}</p>
+  <div class="border p-4 w-1/4 bg-indigo-50 border-2 rounded-md">
+  <p class="text-lg font-semibold text-indigo-700">{{ entry.user.username}}</p>
+    <p class="text-gray-800">{{ entry.content }}</p>
+    <p class="text-gray-500">{{ entry.created_at }}</p>
+    <p class="text-blue-500">{{ entry.title }}</p>
     <hr>
   {% empty %}
-    <p>No previous entries found.</p>
+  <p class="text-gray-600 text-center w-full">No previous entries found.</p>
   {% endfor %}
+  </div>
+</div>
+<h1 class="text-center font-medium text-4xl mt-8 mb-8 text-indigo-700">Other Services</h1>
+  <div class="Services flex justify-center">
+    <div class="Ambulance w-">
+      <h1 class="">Ambulance Service</h1>
+      <p>This system is also available for 24 hour Ambulance Service</p>
+    </div>
+    <div class="Fire-fighter">
+      <h1 class="">Damkal Service</h1>
+      <p>This system is also available for 24 hour Damkal Service</p>
+    </div>
+  </div>
 </body>
 {% endblock %}
 </html>  

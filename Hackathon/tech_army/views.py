@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import Signup, LoginForm, UserIDForm, SharedTextareaForm, ReplyForm
-from .models import Society, UserProfile, SharedTextarea, Reply
+from .forms import Signup, LoginForm, UserIDForm, SharedTextareaForm, ReplyForm,DeptloginForm
+from .models import Society, UserProfile, SharedTextarea, Reply,Notice,Activity
 import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -13,6 +13,9 @@ stemmer = nltk.SnowballStemmer("english")
 from nltk.corpus import stopwords
 import string
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Activity
+from .forms import ActivityForm
 stopwords = set(stopwords.words('english'))
 
 with open('tech_army/mnb.pkl', 'rb') as file:
@@ -69,23 +72,76 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request, data=request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
+#             user = authenticate(request, username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('/logged')
+#         return redirect('/logged')
+#     else:
+#         form = LoginForm()
+#     return render(request, 'login.html', {'form': form})   
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
+
+            # Check if the user account exists
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                user = None
 
             if user is not None:
-                login(request, user)
-                return redirect('/logged')
-        return redirect('/logged')
+                # Authenticate the user
+                user = authenticate(request, username=username, password=password)
+
+                if user is not None:
+                    login(request, user)
+                    return redirect('/logged')  # Redirect to the logged-in user's dashboard or home page
+                else:
+                    # Authentication failed, handle the error (e.g., show an error message)
+                    pass
+            else:
+                # User account does not exist, handle the error (e.g., show an error message)
+                pass
+        else:
+            # Form is not valid, handle the error (e.g., show an error message)
+            pass
     else:
         form = LoginForm()
+
     return render(request, 'login.html', {'form': form})
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from .forms import DeptloginForm
 
+def login_view_dept(request):
+    if request.method == 'POST':
+        form = DeptloginForm(request.POST)
+        if form.is_valid():
+           
+            return redirect('/logged1')  # Redirect to the desired URL after successful login
+           
+    else:
+        form = DeptloginForm()
 
+    return render(request, 'deptlogin.html', {'form': form })
+
+def logged1(request):
+    
+    return render(request, 'logged1.html',)        
+        
+        
+        
+        
 @login_required
 def logged(request):
     products = Society.objects.all()
@@ -113,36 +169,48 @@ def update_user_id(request):
     return render(request, 'studentid.html', {'form': form, 'user_profile': user_profile})
 
 
-def shared_textarea(request):
-    form = SharedTextareaForm()
-    entries = SharedTextarea.objects.all()
-    user_profiles = UserProfile.objects.all()
-    params = {'user_profiles': user_profiles}
+def shared_textarea(request,municipality_name):
+    user = request.user
+    try:
+        user_profile = UserProfile.objects.get(user=user)
+        
 
-    if request.method == 'POST':
-        form = SharedTextareaForm(request.POST)
-        if form.is_valid():
-            content = form.cleaned_data['content']
-            title = form.cleaned_data['title']
-            # Perform hate speech detection using the MNB model.
-            text_clean = clean_text(content)  # Preprocess the text and get a list of words.
-            print(text_clean)
-            hate_speech_prediction = detect_hate_speech(text_clean)
-            print(hate_speech_prediction)
+        if user_profile.municipality_name == municipality_name :
+    
+            form = SharedTextareaForm()
+            entries = SharedTextarea.objects.all()
+            user_profiles = UserProfile.objects.all()
+            params = {'user_profiles': user_profiles}
 
-            if hate_speech_prediction == 1:
-                return redirect('/logged')  # Make sure you have an 'index' view to handle this redirection.
-                # Handle hate speech (e.g., display an error message or take appropriate action).
-                # You may want to show an error message here.
+            if request.method == 'POST':
+                form = SharedTextareaForm(request.POST)
+                if form.is_valid():
+                    content = form.cleaned_data['content']
+                    title = form.cleaned_data['title']
+                    # Perform hate speech detection using the MNB model.
+                    text_clean = clean_text(content)  # Preprocess the text and get a list of words.
+                    print(text_clean)
+                    hate_speech_prediction = detect_hate_speech(text_clean)
+                    print(hate_speech_prediction)
 
-            shared_textarea = SharedTextarea.objects.create(content=content, title=title, user=request.user)
-            shared_textarea.user_profile = UserProfile.objects.get(user=request.user)
-            shared_textarea.save()
-            return redirect('/shared_textarea')
+                    if hate_speech_prediction == 1:
+                        return redirect('/logged')  # Make sure you have an 'index' view to handle this redirection.
+                        # Handle hate speech (e.g., display an error message or take appropriate action).
+                        # You may want to show an error message here.
 
-    return render(request, 'shared_textarea.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
-
-
+                    shared_textarea = SharedTextarea.objects.create(content=content, title=title, user=request.user)
+                    shared_textarea.user_profile = UserProfile.objects.get(user=request.user)
+                    shared_textarea.save()
+                    return redirect('/shared_textareas')
+        
+            return render(request, 'shared_textarea.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
+   
+        else:
+            return redirect('/logged')
+            
+        
+    except UserProfile.DoesNotExist:
+       pass
 def ReplyForms(request):
     form = ReplyForm()
     entries = Reply.objects.all()
@@ -160,3 +228,94 @@ def ReplyForms(request):
             return redirect('/reply_textarea')
 
     return render(request, 'reply_textarea.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
+
+
+
+
+def Noticeboard(request):
+    product1 = Notice.objects.all()
+    params1 = {'product1': product1}
+    product2 = Activity.objects.all()
+    params2 = {'product2': product2}
+    context = {**params1, **params2}
+    return render(request, 'base.html', context)
+
+
+def emergency(request):
+    
+      return render(request, 'emergency.html')
+
+
+
+
+def shared_textareas(request):
+    
+            form = SharedTextareaForm()
+            entries = SharedTextarea.objects.all()
+            user_profiles = UserProfile.objects.all()
+            params = {'user_profiles': user_profiles}
+
+            if request.method == 'POST':
+                form = SharedTextareaForm(request.POST)
+                if form.is_valid():
+                    content = form.cleaned_data['content']
+                    title = form.cleaned_data['title']
+                    # Perform hate speech detection using the MNB model.
+                    text_clean = clean_text(content)  # Preprocess the text and get a list of words.
+                    print(text_clean)
+                    hate_speech_prediction = detect_hate_speech(text_clean)
+                    print(hate_speech_prediction)
+
+                    if hate_speech_prediction == 1:
+                        return redirect('/logged')  # Make sure you have an 'index' view to handle this redirection.
+                        # Handle hate speech (e.g., display an error message or take appropriate action).
+                        # You may want to show an error message here.
+
+                    shared_textarea = SharedTextarea.objects.create(content=content, title=title, user=request.user)
+                    shared_textarea.user_profile = UserProfile.objects.get(user=request.user)
+                    shared_textarea.save()
+                    return redirect('/shared_textareas')
+        
+            return render(request, 'shared_textarea.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
+   
+def shared_textareasdep(request):
+    
+            form = SharedTextareaForm()
+            entries = SharedTextarea.objects.all()
+            user_profiles = UserProfile.objects.all()
+            params = {'user_profiles': user_profiles}
+
+            if request.method == 'POST':
+                form = SharedTextareaForm(request.POST)
+                if form.is_valid():
+                    content = form.cleaned_data['content']
+                    title = form.cleaned_data['title']
+                    # Perform hate speech detection using the MNB model.
+                    text_clean = clean_text(content)  # Preprocess the text and get a list of words.
+                    print(text_clean)
+                    hate_speech_prediction = detect_hate_speech(text_clean)
+                    print(hate_speech_prediction)
+
+                    if hate_speech_prediction == 1:
+                        return redirect('/logged')  # Make sure you have an 'index' view to handle this redirection.
+                        # Handle hate speech (e.g., display an error message or take appropriate action).
+                        # You may want to show an error message here.
+
+                    shared_textarea = SharedTextarea.objects.create(content=content, title=title, user=request.user)
+                    shared_textarea.user_profile = UserProfile.objects.get(user=request.user)
+                    shared_textarea.save()
+                    return redirect('/shared_textareas')
+        
+            return render(request, 'logged2.html', {'form': form, 'entries': entries, 'params': params, 'username': request.user.username})
+def update_activity(request):
+    activity = Activity.objects.first()  # Assuming you want to update the first activity instance, modify this based on your requirement
+
+    if request.method == 'POST':
+        form = ActivityForm(request.POST, request.FILES, instance=activity)
+        if form.is_valid():
+            form.save()
+            return redirect('activity_detail')  # Redirect to the appropriate view after form submission
+    else:
+        form = ActivityForm(instance=activity)
+
+    return render(request, 'update_activity.html', {'form': form})
